@@ -13,6 +13,13 @@
     <%= form.rich_textarea :description %>
   </div>
 
+<%= image_tag(@product.featured_image, size:"50x50" )if @product.featured_image.attached? %>
+  <%= image_tag("https://static.vecteezy.com/system/resources/previews/022/493/595/non_2x/3d-question-mark-icon-or-ask-faq-answer-solution-isolated-on-transparent-background-file-png.png", size:"50x50")  if not @product.featured_image.attached? %>
+
+  <div>
+    <%= form.label :featured_image, style: "display: block" %>
+    <%= form.file_field :featured_image, accept: "image/*" %>
+  </div>
 
   <div>
     <%= form.submit %>
