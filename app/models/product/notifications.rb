@@ -2,7 +2,7 @@ module Product::Notifications
   extend ActiveSupport::Concern
 
   included do
-    has_many :subscribers, dependent: destroy
+    has_many :subscribers, dependent: :destroy
     after_update_commit :notify_subscribers, if: :back_in_stock?
   end
 
