@@ -42,6 +42,7 @@ class ProductsController < ApplicationController
   private
     def set_product
       @product = Product.find(params[:id])
+      p "\n*****\nthis is a pp in set_product for #{@product.name}\n******\n"
     end
 
     def product_params
