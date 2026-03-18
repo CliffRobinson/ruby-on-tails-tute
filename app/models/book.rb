@@ -1,5 +1,2 @@
-module Book
-  def self.table_name_prefix
-    "book_"
-  end
+class Book < Product
 end
