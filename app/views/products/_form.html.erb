@@ -9,6 +9,16 @@
   </div>
 
   <div>
+    <%# Doesn't work the way I think it should  %>
+    <%# <%= form.checkbox :type, checked_value: "Book", unchecked_value: nil %>
+    <%= form.check_box :is_book, checked: @product.is_a?(Book) %>
+    <%= form.label :is_book, "Is this a book???!?" %>
+  </div>
+
+  <%= form.label :author %>
+  <%= form.text_field :author %>
+
+  <div>
     <%= form.label :description, style: "display: block" %>
     <%= form.rich_textarea :description %>
   </div>

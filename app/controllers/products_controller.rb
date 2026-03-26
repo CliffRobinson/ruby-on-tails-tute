@@ -15,7 +15,9 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.new(product_params)
+    @product = product_params[:is_book] == "1" ? Book.new : Product.new
+    @product.assign_attributes(product_params.except(:is_book))
+
     if @product.save
       redirect_to @product
     else
@@ -27,7 +29,18 @@ class ProductsController < ApplicationController
   end
 
   def update
-    if @product.update(product_params)
+    # Convert to Book or Product if type is changing
+    if product_params[:is_book] == "1" && !@product.is_a?(Book)
+      @product = @product.becomes(Book)
+      @product.type = "Book"
+    elsif product_params[:is_book] == "0" && @product.is_a?(Book)
+      @product = @product.becomes(Product)
+      @product.type = nil
+    end
+
+    @product.assign_attributes(product_params.except(:is_book))
+
+    if @product.save  # Just save, don't re-assign
       redirect_to @product
     else
       render :edit, status: :unprocessable_entity
@@ -46,6 +59,6 @@ class ProductsController < ApplicationController
     end
 
     def product_params
-      params.expect(product: [ :name, :description, :featured_image, :inventory_count ])
+      params.expect(product: [ :name, :description, :featured_image, :inventory_count, :is_book ])
     end
 end
