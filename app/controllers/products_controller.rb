@@ -7,8 +7,8 @@ class ProductsController < ApplicationController
     @ilove = "my mom"
   end
 
-  def show
-  end
+              def show
+              end
 
   def new
     @product = Product.new
@@ -29,7 +29,6 @@ class ProductsController < ApplicationController
   end
 
   def update
-    # Convert to Book or Product if type is changing
     if product_params[:is_book] == "1" && !@product.is_a?(Book)
       @product = @product.becomes(Book)
       @product.type = "Book"
@@ -40,7 +39,7 @@ class ProductsController < ApplicationController
 
     @product.assign_attributes(product_params.except(:is_book))
 
-    if @product.save  # Just save, don't re-assign
+    if @product.save
       redirect_to @product
     else
       render :edit, status: :unprocessable_entity
